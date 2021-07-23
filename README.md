@@ -23,13 +23,15 @@ Alternatively for a local build refer to the Makefile command
 ```bash
 make local-build
 ```
+
 The rest of the Makefile commands are the same.
+
 Application code: rivm/rivm/*
 
 To check out the auto generated docs visit:
 http://localhost:8001/
 
-Application endpoints: 
+Application local endpoints: 
 1. http://localhost:8000/graphql
 2. http://localhost:8000/
 
@@ -42,4 +44,9 @@ Run commands inside the docker container:
 
 ```bash
 make shell
+```
+
+To run tests
+```bash
+make run-tests
 ```
