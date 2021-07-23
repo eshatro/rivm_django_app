@@ -1,0 +1,39 @@
+version: '2'
+
+volumes:
+  local_postgres_data: { }
+
+services:
+  postgres:
+    image: postgres:11.6
+    container_name: db
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data:Z
+    ports:
+      - "5432:5432"
+  django:
+    restart: always
+    environment:
+      - DJANGO_SECRET_KEY=local
+    image: enidoshatro/lab:rivm_api-latest
+    container_name: django
+    command: >
+      bash -c "python wait_for_postgres.py &&
+               ./manage.py migrate &&
+               ./manage.py populate_database_rivm "./data/rivm2016.csv" &&
+               ./manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+  documentation:
+    restart: always
+    image: enidoshatro/lab:rivm_api-latest
+    container_name: docs
+    command: "mkdocs serve"
+    volumes:
+      - ./:/code
+    ports:
+      - "8001:8001"
