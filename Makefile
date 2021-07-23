@@ -30,5 +30,5 @@ flush-containers:
 	docker compose down && docker volume rm graphql-api_local_postgres_data
 
 tear-down:
-	docker compose down && docker image rm enidoshatro/lab:rivm_api-latest postgres:11.6 && docker volume rm graphql-api_local_postgres_data
+	docker compose down && docker image rm enidoshatro/lab:rivm_api-latest postgres:11.6 && docker volume rm local_postgres_data
 # END local image build
