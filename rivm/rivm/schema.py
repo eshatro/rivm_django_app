@@ -46,7 +46,7 @@ class Query(graphene.ObjectType):
     entry = graphene.Field(EntryType, id=graphene.Int())
     entries = graphene.List(EntryType)
 
-    impact = graphene.Field(ImpactType, id=graphene.Int(), indicator_id=graphene.Int())
+    impact = graphene.Field(ImpactType, entry_id=graphene.Int(), indicator_id=graphene.Int())
 
     def resolve_indicator(root, info, id):
         # Querying a list
@@ -64,9 +64,9 @@ class Query(graphene.ObjectType):
         # Querying a list
         return Entry.objects.all()
 
-    def resolve_impact(root, info, id, indicator_id):
+    def resolve_impact(root, info, entry_id, indicator_id):
         # Querying a list
-        return Impact.objects.get(pk=id, indicator_pk=indicator_id)
+        return Impact.objects.get(entry_pk=entry_id, indicator_pk=indicator_id)
 
 
 schema = graphene.Schema(query=Query)
